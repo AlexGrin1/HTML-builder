@@ -12,17 +12,17 @@ function added() {
       rl.close();
       return;
     }
-    if (!`./text.txt`) {
-      fs.open("text.txt", "w", (err) => {
-        if (err) throw err;
-        console.log("File created");
-      });
-    } else {
-      fs.appendFile("text.txt", `\n${answer}`, (err) => {
-        if (err) throw err;
-        console.log("Data has been added!");
-      });
-    }
+    // if (!`${__dirname}/text.txt`) {
+    //   fs.open("text.txt", "w", (err) => {
+    //     if (err) throw err;
+    //     console.log("File created");
+    //   });
+    // } else {
+    fs.appendFile(`${__dirname}/text.txt`, `\n${answer}`, (err) => {
+      if (err) throw err;
+      //   console.log("Data has been added!");
+    });
+    //}
     added();
     //rl.close();
   });
