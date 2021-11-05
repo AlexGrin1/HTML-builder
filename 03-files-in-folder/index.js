@@ -18,7 +18,7 @@ let nextDir = async (pth) => {
             async function getResult() {
               fs.stat(`${__dirname}/secret-folder/${p.base}`, (err, stats) => {
                 if (err) throw err;
-                console.log(`${p.name} - ${p.ext.split("").slice(1, -1).join("")} - ${stats.size / 1000} kb`);
+                console.log(`${p.name} - ${p.ext.split("").slice(1).join("")} - ${stats.size / 1000} kb`);
               });
             }
             getResult();
