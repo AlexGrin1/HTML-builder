@@ -1,35 +1,23 @@
 const fs = require("fs");
+const { resolve } = require("path");
 const fsP = require("fs").promises;
 const path = require("path");
 
 let dataFromTempate;
 let dataFromComponents = {};
 
-clear("project-dist/assets");
-
-setTimeout(() => {
-  readTempate();
-  createFolder("project-dist", "assets");
-  readComponents();
-  copyFiles("assets");
-  readStylesFiles();
-}, 0);
-
-async function clear(direct) {
-  let directories = await fsP.readdir(path.join(__dirname, direct));
-  for (let file of directories) {
-    fsP.lstat(path.join(__dirname, direct, file)).then((data) => {
-      if (data.isFile()) {
-        fs.unlink(path.join(__dirname, direct, file), (err) => {});
-      }
-
-      if (data.isDirectory()) {
-        fs.rmdir(path.join(__dirname, `${direct}/${file}`), (err) => {});
-        clear(`${direct}/${file}`);
-      }
-    });
-  }
+function app() {
+  fs.rmdir(path.join(__dirname, "project-dist/assets"), { recursive: true }, (err) => {
+    readTempate();
+    createFolder("project-dist", "assets");
+    readComponents();
+    readStylesFiles();
+    setTimeout(() => {
+      copyFiles("assets");
+    }, 0);
+  });
 }
+app();
 
 async function createFolder(folderName, assetsName) {
   let directories = await fsP.readdir(path.join(__dirname));
